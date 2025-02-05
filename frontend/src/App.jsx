@@ -3,6 +3,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Layout from './components/Layout';
 import LoginPage from './pages/LoginPage';
+import GalleryPage from './pages/GalleryPage';
+import UploadPage from './pages/UploadPage';
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <div>Home Page (Será implementada na próxima fase)</div>
+                  <GalleryPage />
                 </Layout>
               </ProtectedRoute>
             }
@@ -25,7 +27,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <Layout>
-                  <div>Upload Page (Será implementada na próxima fase)</div>
+                  <UploadPage />
                 </Layout>
               </ProtectedRoute>
             }
