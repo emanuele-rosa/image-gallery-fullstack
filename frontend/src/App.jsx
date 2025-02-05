@@ -1,16 +1,39 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Layout from './components/Layout';
+import LoginPage from './pages/LoginPage';
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-gray-100">
+    <AuthProvider>
+      <Router>
         <Routes>
-          <Route path="/" element={<div>Home Page</div>} />
-          <Route path="/login" element={<div>Login Page</div>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <div>Home Page (Será implementada na próxima fase)</div>
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/upload"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <div>Upload Page (Será implementada na próxima fase)</div>
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-      </div>
-    </Router>
-  )
+      </Router>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
