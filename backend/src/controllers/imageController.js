@@ -1,4 +1,3 @@
-// src/controllers/imageController.js
 const Image = require("../models/Image");
 
 // Buscar imagens
