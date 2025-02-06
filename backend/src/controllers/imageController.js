@@ -46,18 +46,4 @@ const createImage = async (req, res) => {
   }
 };
 
-// Buscar imagem por ID
-const getImageById = async (req, res) => {
-  try {
-    const image = await Image.findById(req.params.id);
-    if (!image) {
-      return res.status(404).json({ message: "Imagem não encontrada" });
-    }
-    res.json(image);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Erro ao buscar imagem" });
-  }
-};
-
-module.exports = { getImages, createImage, getImageById };
+module.exports = { getImages, createImage };
