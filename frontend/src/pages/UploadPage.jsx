@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useNotification } from '../components/NotificationSystem';
+import { LoadingButton } from '../components/LoadingSpinner';
 import api from '../services/api';
 
 const UploadPage = () => {
   const navigate = useNavigate();
+  const { addNotification } = useNotification();
   const [formData, setFormData] = useState({
     author: '',
     width: '',
@@ -11,8 +14,6 @@ const UploadPage = () => {
     url: '',
     download_url: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,9 +26,6 @@ const UploadPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setError('');
-
       const data = {
         ...formData,
         width: parseInt(formData.width),
@@ -35,11 +33,10 @@ const UploadPage = () => {
       };
 
       await api.post('/images', data);
+      addNotification('Imagem enviada com sucesso!', 'success');
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Erro ao enviar imagem');
-    } finally {
-      setLoading(false);
+      addNotification(err.response?.data?.message || 'Erro ao enviar imagem', 'error');
     }
   };
 
@@ -48,12 +45,6 @@ const UploadPage = () => {
       <h1 className="text-2xl font-bold mb-6">Upload de Imagem</h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {error && (
-          <div className="bg-red-50 text-red-700 p-4 rounded-md">
-            {error}
-          </div>
-        )}
-
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Autor
@@ -125,13 +116,12 @@ const UploadPage = () => {
           />
         </div>
 
-        <button
+        <LoadingButton
           type="submit"
-          disabled={loading}
-          className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
         >
-          {loading ? 'Enviando...' : 'Enviar Imagem'}
-        </button>
+          Enviar Imagem
+        </LoadingButton>
       </form>
     </div>
   );
