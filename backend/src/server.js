@@ -2,17 +2,30 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
+const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
+const compression = require("compression");
 const swaggerSpec = require("./config/swagger");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const imageRoutes = require("./routes/images");
 
-const helmet = require("helmet");
-const rateLimit = require("express-rate-limit");
-
 const app = express();
 
 connectDB();
+
+app.use(
+  compression({
+    level: 6,
+    threshold: 100 * 1024,
+    filter: (req, res) => {
+      if (req.headers["x-no-compression"]) {
+        return false;
+      }
+      return compression.filter(req, res);
+    },
+  })
+);
 
 app.use(helmet());
 
