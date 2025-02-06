@@ -10,11 +10,11 @@ const imageRoutes = require("./routes/images");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 
-app.use(helmet());
-
 const app = express();
 
 connectDB();
+
+app.use(helmet());
 
 app.use(cors());
 
@@ -28,6 +28,7 @@ app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 5,
+    message: "To many requests, please try again later",
   })
 );
 app.use("/api/images", imageRoutes);
