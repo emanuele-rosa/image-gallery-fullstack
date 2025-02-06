@@ -7,6 +7,10 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth");
 const imageRoutes = require("./routes/images");
 
+const helmet = require("helmet");
+
+app.use(helmet());
+
 const app = express();
 
 connectDB();
