@@ -8,6 +8,7 @@ const authRoutes = require("./routes/auth");
 const imageRoutes = require("./routes/images");
 
 const helmet = require("helmet");
+const rateLimit = require("express-rate-limit");
 
 app.use(helmet());
 
@@ -21,7 +22,14 @@ app.use(express.json());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-app.use("/api/auth", authRoutes);
+app.use(
+  "/api/auth",
+  authRoutes,
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+  })
+);
 app.use("/api/images", imageRoutes);
 
 app.get("/", (req, res) => {
