@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const { protect } = require("../middlewares/auth");
-const {
-  getImages,
-  createImage,
-} = require("../controllers/imageController");
+const { cacheMiddleware } = require("../config/cache");
+const { getImages, createImage } = require("../controllers/imageController");
 
 router.use(protect); // Protege todas as rotas de imagens
 
@@ -78,7 +76,10 @@ router.use(protect); // Protege todas as rotas de imagens
  *                 message:
  *                   type: string
  *                   example: Token não fornecido ou inválido
- *   post:
+ */
+router.get("/", protect, cacheMiddleware(300), getImages);
+
+/* *   post:
  *     summary: Cria uma nova imagem
  *     tags: [Images]
  *     security:
@@ -157,6 +158,6 @@ router.use(protect); // Protege todas as rotas de imagens
  *                   type: string
  *                   example: Token não fornecido ou inválido
  */
-router.route("/").get(getImages).post(createImage);
+router.post("/", protect, createImage);
 
 module.exports = router;

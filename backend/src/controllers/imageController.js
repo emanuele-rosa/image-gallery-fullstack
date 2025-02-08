@@ -1,6 +1,6 @@
 const Image = require("../models/Image");
+const { redisClient } = require("../config/cache");
 
-// Buscar imagens
 const getImages = async (req, res) => {
   try {
     const { author, page = 1, limit = 10 } = req.query;
@@ -24,7 +24,6 @@ const getImages = async (req, res) => {
   }
 };
 
-// Inserir imagem
 const createImage = async (req, res) => {
   try {
     const { author, width, height, url, download_url } = req.body;
@@ -39,6 +38,14 @@ const createImage = async (req, res) => {
     });
 
     const savedImage = await image.save();
+
+    // Invalidar cache após criar nova imagem
+    const cachePattern = "cache:/api/images*";
+    const keys = await redisClient.keys(cachePattern);
+    if (keys.length > 0) {
+      await redisClient.del(keys);
+    }
+
     res.status(201).json(savedImage);
   } catch (error) {
     console.error(error);
