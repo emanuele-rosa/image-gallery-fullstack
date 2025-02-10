@@ -4,7 +4,7 @@ const { protect } = require("../middlewares/auth");
 const { cacheMiddleware } = require("../config/cache");
 const { getImages, createImage } = require("../controllers/imageController");
 
-router.use(protect); // Protege todas as rotas de imagens
+router.use(protect);
 
 /**
  * @swagger

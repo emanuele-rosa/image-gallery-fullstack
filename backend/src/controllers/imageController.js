@@ -39,7 +39,6 @@ const createImage = async (req, res) => {
 
     const savedImage = await image.save();
 
-    // Invalidar cache após criar nova imagem
     const cachePattern = "cache:/api/images*";
     const keys = await redisClient.keys(cachePattern);
     if (keys.length > 0) {
