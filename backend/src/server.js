@@ -31,22 +31,32 @@ const startServer = async () => {
       })
     );
 
-    app.use(helmet());
+    app.use(
+      helmet({
+        contentSecurityPolicy: {
+          directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            imgSrc: ["'self'", "data:", "https:"],
+          },
+        },
+        xssFilter: true,
+      })
+    );
 
     app.use(cors());
-
     app.use(express.json());
 
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
     app.use(
       "/api/auth",
-      authRoutes,
       rateLimit({
         windowMs: 15 * 60 * 1000,
         max: 5,
-        message: "To many requests, please try again later",
-      })
+        message: "Too many requests, please try again later",
+      }),
+      authRoutes
     );
     app.use("/api/images", imageRoutes);
 
@@ -60,7 +70,7 @@ const startServer = async () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {
-    console.error("Failed to connect to Redis:", error);
+    console.error("Failed to start server:", error);
     process.exit(1);
   }
 };
