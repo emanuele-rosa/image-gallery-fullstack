@@ -11,12 +11,20 @@ const users = [
     username: "user",
     password: "user123",
   },
+  {
+    username: "john_doe",
+    password: "johndoe123",
+  },
+  {
+    username: "jane_doe",
+    password: "janedoe123",
+  },
 ];
 
 const seedUsers = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
-    await User.deleteMany({}); // Limpa usuários existentes
+    await User.deleteMany({});
     await User.create(users);
     console.log("Usuários criados com sucesso!");
     process.exit();
