@@ -1,6 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const { login } = require("../controllers/authController");
+const {
+  bruteForceProtection,
+  loginLimiter,
+} = require("../middlewares/security");
 
 /**
  * @swagger
@@ -61,6 +65,6 @@ const { login } = require("../controllers/authController");
  *                   type: string
  *                   example: "Username e password são obrigatórios"
  */
-router.post("/login", login);
+router.post("/login", bruteForceProtection, loginLimiter, login);
 
 module.exports = router;
