@@ -1,165 +1,129 @@
-# Projeto Galeria de Imagens
+# Galeria de Imagens API & Frontend
 
-Sistema de gerenciamento de imagens com autenticação de usuários e funcionalidades de busca e inserção.
+Um projeto full-stack para gerenciamento de galeria de imagens com autenticação, busca e inserção.
 
-## Tecnologias Utilizadas
-
-### Frontend
-
-- React.js
-- Vite
-- Tailwind CSS
-- Axios
-- React Router DOM
+## 🚀 Tecnologias
 
 ### Backend
-
 - Node.js
 - Express.js
-- MongoDB
+- MongoDB com Mongoose
+- Redis para cache
 - JWT para autenticação
+- HTTPS
+- Swagger para documentação
 
-## Requisitos
+### Frontend
+- React
+- React Router DOM
+- Axios
+- Tailwind CSS
+- Context API
 
-- Node.js 18+
-- MongoDB
-- NPM ou Yarn
+## 🔧 Instalação
 
-## Estrutura do Projeto
-
-```
-├── backend/
-│   ├── src/
-│   │   ├── config/
-│   │   ├── controllers/
-│   │   ├── middlewares/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   └── utils/
-│   ├── .env
-│   └── server.js
-└── frontend/
-    ├── src/
-    │   ├── components/
-    │   ├── contexts/
-    │   ├── pages/
-    │   ├── services/
-    │   └── utils/
-    └── .env
+1. Clone o repositório
+```bash
+git clone https://github.com/emanuele-rosa/fullstack3
 ```
 
-## Configuração do Ambiente
-
-### Backend
-
-1. Instale as dependências:
-
+2. Instale as dependências (Backend)
 ```bash
 cd backend
 npm install
 ```
 
-2. Configure as variáveis de ambiente:
-
-```env
-PORT=5001
-MONGODB_URI=mongodb://localhost:27017
-JWT_SECRET=seu_jwt_secret
-```
-
-3. Inicie o servidor:
-
-```bash
-npm run dev
-```
-
-### Frontend
-
-1. Instale as dependências:
-
+3. Instale as dependências (Frontend)
 ```bash
 cd frontend
 npm install
 ```
 
-2. Configure as variáveis de ambiente:
+4. Configure as variáveis de ambiente
 
+Backend (.env):
+```env
+PORT=5000
+HTTPS_PORT=443
+MONGODB_URI=mongodb://localhost:27017
+REDIS_URL=redis://localhost:6379
+JWT_SECRET=environment_jwt_secret
+NODE_ENV=production
+```
+
+Frontend (.env):
 ```env
 VITE_API_URL=http://localhost:5001/api
 ```
 
-3. Inicie o aplicativo:
+## 🚀 Executando o projeto
 
+### Backend
 ```bash
+cd backend
 npm run dev
 ```
 
-## API Endpoints
-
-### Autenticação
-
-- `POST /api/auth/login` - Login do usuário
-
-### Imagens
-
-- `GET /api/images` - Lista todas as imagens
-- `POST /api/images` - Cria uma nova imagem
-- `GET /api/images/:id` - Busca uma imagem específica
-
-## Funcionalidades
-
-1. **Autenticação**
-
-   - Login de usuário
-   - Proteção de rotas
-   - Gerenciamento de sessão
-
-2. **Gerenciamento de Imagens**
-
-   - Listagem com paginação
-   - Busca por autor
-   - Upload de novas imagens
-
-3. **Interface**
-   - Design responsivo
-   - Feedback visual de ações
-   - Loading states
-   - Tratamento de erros
-
-## Deploy
-
-### Backend
-
-1. Prepare as variáveis de ambiente para produção
-2. Configure o MongoDB Atlas ou seu servidor MongoDB
-3. Deploy no servidor escolhido (ex: Heroku, DigitalOcean)
-
 ### Frontend
-
-1. Gere o build de produção:
-
 ```bash
-npm run build
+cd frontend
+npm run dev
 ```
 
-2. Faça o deploy dos arquivos estáticos em um serviço de hospedagem (ex: Vercel, Netlify)
+## 📚 Documentação da API
 
-## Segurança
+A documentação da API está disponível através do Swagger UI em:
+```
+http://localhost:5001/api-docs
+```
 
-- Todas as senhas são hasheadas
-- Autenticação via JWT
-- Proteção contra CSRF
-- Validação de dados
-- Sanitização de inputs
 
-## Contribuição
+## 🏗 Estrutura do Projeto
 
-1. Faça o fork do projeto
-2. Crie uma branch para sua feature
-3. Faça o commit das mudanças
-4. Faça o push para a branch
-5. Abra um Pull Request
+### Backend
+```
+backend/
+├── src/
+├───── config/
+│       ├── cache.js
+│       ├── db.js
+│       └── swagger.js
+├───── controllers/
+│       ├── authController.js
+│       └── imageController.js
+├───── middlewares/
+│       ├── auth.js
+│       └── security.js
+├───── models/
+│       ├── Image.js
+│       └── User.js
+├───── routes/
+│       ├── auth.js
+│       └── images.js
+└───── server.js
+```
 
-## Licença
+### Frontend
+```
+frontend/
+├── src/
+│   ├── components/
+│   ├── contexts/
+│   ├── pages/
+│   ├── services/
+│   └── App.jsx
+```
 
-MIT
+## ⚙️ Funcionalidades
+
+- Autenticação de usuários
+- Upload de imagens
+- Listagem de imagens com paginação
+- Busca por autor
+- Cache de resposta
+- Proteção de rotas
+
+
+## 📫 Contato
+
+Emanuele A. B. Flor da Rosa - emanuelerosa@alunos.utfpr.edu.br
