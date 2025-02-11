@@ -79,7 +79,10 @@ router.use(protect);
  */
 router.get("/", protect, cacheMiddleware(300), getImages);
 
-/* *   post:
+/**
+ * @swagger
+ * /api/images:
+ *   post:
  *     summary: Cria uma nova imagem
  *     tags: [Images]
  *     security:
